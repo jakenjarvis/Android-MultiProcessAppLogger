@@ -11,7 +11,8 @@ import com.tojc.logging.android.provider.LoggerProvider;
 public class LoggerSettings implements LoggerSettingsPublicInterface
 {
 	private Context context;
-    private boolean logEnabled;
+    private boolean loggerEnabled;
+    private boolean logcatEnabled;
 	private String packageName;
 	private LoggerModelType loggerModelType;
 	private LoggerModel targetLoggerModel = null;
@@ -21,7 +22,8 @@ public class LoggerSettings implements LoggerSettingsPublicInterface
     public LoggerSettings()
     {
     	this.context = null;
-    	this.logEnabled = true;
+    	this.loggerEnabled = true;
+    	this.logcatEnabled = true;
     	this.packageName = "";
     	this.loggerModelType = LoggerModelType.OriginalModel;
     	this.targetLoggerModel = null;
@@ -89,14 +91,25 @@ public class LoggerSettings implements LoggerSettingsPublicInterface
 	}
 
 	@Override
-	public boolean isLogEnabled()
+	public boolean isLoggerEnabled()
 	{
-		return this.logEnabled;
+		return this.loggerEnabled;
 	}
 	@Override
-	public void setLogEnabled(boolean logEnabled)
+	public void setLoggerEnabled(boolean loggerEnabled)
 	{
-		this.logEnabled = logEnabled;
+		this.loggerEnabled = loggerEnabled;
+	}
+
+	@Override
+	public boolean isLogcatEnabled()
+	{
+		return this.logcatEnabled;
+	}
+	@Override
+	public void setLogcatEnabled(boolean logcatEnabled)
+	{
+		this.logcatEnabled = logcatEnabled;
 	}
 
 	public String getPackageName()

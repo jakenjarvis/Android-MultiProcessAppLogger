@@ -119,6 +119,12 @@ public abstract class LoggerModelBase implements LoggerModel
 	}
 
 	@Override
+	public LoggerSettings getSettings()
+	{
+		return this.settings;
+	}
+
+	@Override
 	public LoggerItem createInstance(LoggerLevel level)
 	{
 		if(this.context == null)

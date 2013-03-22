@@ -21,9 +21,11 @@ public interface Interface
 		public void setLoggerModelType(LoggerModelType loggerModelType);
 		public LoggerModel getLoggerModel();
 		public void setLoggerModel(LoggerModel loggerModel);
-		
-		public boolean isLogEnabled();
-		public void setLogEnabled(boolean logEnabled);
+
+		public boolean isLoggerEnabled();
+		public void setLoggerEnabled(boolean loggerEnabled);
+		public boolean isLogcatEnabled();
+		public void setLogcatEnabled(boolean logcatEnabled);
 
 		public void setPackageName(String packageName);
 
@@ -43,6 +45,7 @@ public interface Interface
 	public interface LoggerModel
 	{
 		public void initialize(Context context, LoggerSettings settings);
+		public LoggerSettings getSettings();
 
 		public LoggerItem createInstance(LoggerLevel level);
 

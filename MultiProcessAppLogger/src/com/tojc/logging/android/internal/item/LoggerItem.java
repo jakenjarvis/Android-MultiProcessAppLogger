@@ -112,40 +112,70 @@ public class LoggerItem extends LogTableItem implements LoggerModelPublicInterfa
 	{
 		this.setMessage(makeMessage(msg, tr, format, args));
 		this.setTag(tag);
-		android_util_Log_print();
-		this.model.addLogCache(this);
+		if(this.model.getSettings().isLogcatEnabled())
+		{
+			android_util_Log_print();
+		}
+		if(this.model.getSettings().isLoggerEnabled())
+		{
+			this.model.addLogCache(this);
+		}
 	}
 
 	@Override
 	public synchronized void print(String msg)
 	{
 		this.setMessage(makeMessage(msg, null, null));
-		android_util_Log_print();
-		this.model.addLogCache(this);
+		if(this.model.getSettings().isLogcatEnabled())
+		{
+			android_util_Log_print();
+		}
+		if(this.model.getSettings().isLoggerEnabled())
+		{
+			this.model.addLogCache(this);
+		}
 	}
 
 	@Override
 	public synchronized void print(String msg, Throwable tr)
 	{
 		this.setMessage(makeMessage(msg, tr, null));
-		android_util_Log_print();
-		this.model.addLogCache(this);
+		if(this.model.getSettings().isLogcatEnabled())
+		{
+			android_util_Log_print();
+		}
+		if(this.model.getSettings().isLoggerEnabled())
+		{
+			this.model.addLogCache(this);
+		}
 	}
 
 	@Override
 	public synchronized void print(String format, Object... args)
 	{
 		this.setMessage(makeMessage(null, null, format, args));
-		android_util_Log_print();
-		this.model.addLogCache(this);
+		if(this.model.getSettings().isLogcatEnabled())
+		{
+			android_util_Log_print();
+		}
+		if(this.model.getSettings().isLoggerEnabled())
+		{
+			this.model.addLogCache(this);
+		}
 	}
 
 	@Override
 	public synchronized void print(Throwable tr, String format, Object... args)
 	{
 		this.setMessage(makeMessage(null, tr, format, args));
-		android_util_Log_print();
-		this.model.addLogCache(this);
+		if(this.model.getSettings().isLogcatEnabled())
+		{
+			android_util_Log_print();
+		}
+		if(this.model.getSettings().isLoggerEnabled())
+		{
+			this.model.addLogCache(this);
+		}
 	}
 
 	@Override
