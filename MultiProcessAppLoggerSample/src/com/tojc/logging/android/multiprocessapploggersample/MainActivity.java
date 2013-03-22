@@ -20,6 +20,10 @@ public class MainActivity extends Activity
 		Logger.verbose().print("test88");
 		Log.v("test49");
 
+		for(int i = 0; i <= 50 ; i++)
+		{
+			Logger.verbose().print("test: %d", i);
+		}
 		String test = Logger.output();
 
 	}

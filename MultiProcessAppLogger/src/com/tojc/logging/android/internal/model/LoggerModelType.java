@@ -4,6 +4,7 @@ import com.tojc.logging.android.internal.Interface.LoggerModel;
 
 public enum LoggerModelType
 {
+	OriginalModel("OriginalModel", null),
 	MemoryCache("MemoryCache", new LoggerModelMemoryCache()),
 	ContentProvider("ContentProvider", new LoggerModelContentProvider()),
 	DelayedContentProvider("DelayedContentProvider", new LoggerModelDelayedContentProvider());

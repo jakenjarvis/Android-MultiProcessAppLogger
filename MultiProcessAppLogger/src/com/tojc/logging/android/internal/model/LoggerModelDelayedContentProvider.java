@@ -31,12 +31,13 @@ public class LoggerModelDelayedContentProvider extends LoggerModelContentProvide
 	public void addLogCache(LoggerItem value)
 	{
 		this.enqueueContentValues(createContentValues(value));
+		this.setLastTimeValue(value.getStartTimeValue());
+
 		if(this.thread == null)
 		{
 			this.thread = new Thread(this);
 			this.thread.start();
 		}
-		this.setLastTimeValue(value.getStartTimeValue());
 	}
 
 	private synchronized void enqueueContentValues(ContentValues value)

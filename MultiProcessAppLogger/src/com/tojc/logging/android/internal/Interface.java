@@ -13,12 +13,15 @@ public interface Interface
 {
 	public interface LoggerSettingsPublicInterface
 	{
-		public void initialize(Context context, LoggerModelType loggerModelType);
 		public void initialize(Context context);
+		public void initialize(Context context, LoggerModelType loggerModelType);
+		public void initialize(Context context, LoggerModel loggerModel);
 
 		public LoggerModelType getLoggerModelType();
 		public void setLoggerModelType(LoggerModelType loggerModelType);
-
+		public LoggerModel getLoggerModel();
+		public void setLoggerModel(LoggerModel loggerModel);
+		
 		public boolean isLogEnabled();
 		public void setLogEnabled(boolean logEnabled);
 

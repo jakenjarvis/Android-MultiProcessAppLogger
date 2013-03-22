@@ -91,7 +91,7 @@ public class LoggerModelContentProvider extends LoggerModelBase
 		}
 		catch (Exception e)
 		{
-			Log.e(MultiProcessAppLogger.TAG, "insertValue error:", e);
+			Log.e(MultiProcessAppLogger.TAG, "deleteAll error:", e);
 		}
 	}
 

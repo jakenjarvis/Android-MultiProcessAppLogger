@@ -14,6 +14,7 @@ public class LoggerSettings implements LoggerSettingsPublicInterface
     private boolean logEnabled;
 	private String packageName;
 	private LoggerModelType loggerModelType;
+	private LoggerModel targetLoggerModel = null;
 
     private ContentProviderSettings contentProviderSettings;
 
@@ -22,7 +23,8 @@ public class LoggerSettings implements LoggerSettingsPublicInterface
     	this.context = null;
     	this.logEnabled = true;
     	this.packageName = "";
-    	this.loggerModelType = LoggerModelType.DelayedContentProvider;
+    	this.loggerModelType = LoggerModelType.OriginalModel;
+    	this.targetLoggerModel = null;
     	this.contentProviderSettings = null;
     }
 
@@ -44,18 +46,20 @@ public class LoggerSettings implements LoggerSettingsPublicInterface
 
 		for(LoggerModelType type : LoggerModelType.values())
 		{
-    		type.getInstance().initialize(this.context, this);
+			this.setLoggerModel(type.getInstance());
 		}
 	}
 
-    public Context getContext()
+	@Override
+	public void initialize(Context context, LoggerModel loggerModel)
 	{
-		return this.context;
+		this.initialize(context, LoggerModelType.OriginalModel);
+		this.setLoggerModel(loggerModel);
 	}
 
-    public LoggerModel getLoggerModel()
+	public Context getContext()
 	{
-		return this.loggerModelType.getInstance();
+		return this.context;
 	}
 
     @Override
@@ -67,6 +71,21 @@ public class LoggerSettings implements LoggerSettingsPublicInterface
 	public void setLoggerModelType(LoggerModelType loggerModelType)
 	{
     	this.loggerModelType = loggerModelType;
+	}
+
+    @Override
+    public LoggerModel getLoggerModel()
+	{
+		return this.targetLoggerModel;
+	}
+    @Override
+	public void setLoggerModel(LoggerModel loggerModel)
+	{
+		if(loggerModel != null)
+		{
+			this.targetLoggerModel = loggerModel;
+	    	this.targetLoggerModel.initialize(this.context, this);
+		}
 	}
 
 	@Override

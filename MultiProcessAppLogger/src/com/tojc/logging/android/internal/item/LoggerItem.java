@@ -86,7 +86,7 @@ public class LoggerItem extends LogTableItem implements LoggerModelPublicInterfa
 		return result;
 	}
 
-	protected synchronized void android_util_Log_print()
+	protected void android_util_Log_print()
 	{
 		switch(this.getLoggerLevel())
 		{
@@ -108,57 +108,42 @@ public class LoggerItem extends LogTableItem implements LoggerModelPublicInterfa
 		}
 	}
 
-	public void print(String tag, String msg, Throwable tr, String format, Object... args)
+	public synchronized void print(String tag, String msg, Throwable tr, String format, Object... args)
 	{
-		synchronized(this)
-		{
-			this.setMessage(makeMessage(msg, tr, format, args));
-			this.setTag(tag);
-		}
+		this.setMessage(makeMessage(msg, tr, format, args));
+		this.setTag(tag);
 		android_util_Log_print();
 		this.model.addLogCache(this);
 	}
 
 	@Override
-	public void print(String msg)
+	public synchronized void print(String msg)
 	{
-		synchronized(this)
-		{
-			this.setMessage(makeMessage(msg, null, null));
-		}
+		this.setMessage(makeMessage(msg, null, null));
 		android_util_Log_print();
 		this.model.addLogCache(this);
 	}
 
 	@Override
-	public void print(String msg, Throwable tr)
+	public synchronized void print(String msg, Throwable tr)
 	{
-		synchronized(this)
-		{
-			this.setMessage(makeMessage(msg, tr, null));
-		}
+		this.setMessage(makeMessage(msg, tr, null));
 		android_util_Log_print();
 		this.model.addLogCache(this);
 	}
 
 	@Override
-	public void print(String format, Object... args)
+	public synchronized void print(String format, Object... args)
 	{
-		synchronized(this)
-		{
-			this.setMessage(makeMessage(null, null, format, args));
-		}
+		this.setMessage(makeMessage(null, null, format, args));
 		android_util_Log_print();
 		this.model.addLogCache(this);
 	}
 
 	@Override
-	public void print(Throwable tr, String format, Object... args)
+	public synchronized void print(Throwable tr, String format, Object... args)
 	{
-		synchronized(this)
-		{
-			this.setMessage(makeMessage(null, tr, format, args));
-		}
+		this.setMessage(makeMessage(null, tr, format, args));
 		android_util_Log_print();
 		this.model.addLogCache(this);
 	}
