@@ -33,23 +33,18 @@ public class LoggerSettings implements LoggerSettingsPublicInterface
 	@Override
 	public void initialize(Context context)
 	{
-		this.initialize(context, LoggerModelType.DelayedContentProvider);
-	}
-
-	@Override
-	public void initialize(Context context, LoggerModelType loggerModelType)
-	{
 		if(this.context == null)
 		{
 			this.context = context;
 	    	this.contentProviderSettings = new ContentProviderSettings(context, new ComponentName(context, LoggerProvider.class));
 		}
-		this.setLoggerModelType(loggerModelType);
+	}
 
-		for(LoggerModelType type : LoggerModelType.values())
-		{
-			this.setLoggerModel(type.getInstance());
-		}
+	@Override
+	public void initialize(Context context, LoggerModelType loggerModelType)
+	{
+		this.initialize(context);
+		this.setLoggerModelType(loggerModelType);
 	}
 
 	@Override
@@ -73,6 +68,11 @@ public class LoggerSettings implements LoggerSettingsPublicInterface
 	public void setLoggerModelType(LoggerModelType loggerModelType)
 	{
     	this.loggerModelType = loggerModelType;
+
+		for(LoggerModelType type : LoggerModelType.values())
+		{
+			this.setLoggerModel(type.getInstance());
+		}
 	}
 
     @Override
