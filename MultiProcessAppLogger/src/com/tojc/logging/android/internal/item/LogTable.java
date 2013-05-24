@@ -10,7 +10,7 @@ import com.tojc.ormlite.android.annotation.AdditionalAnnotation.SortOrder;
 public class LogTable
 {
 	@DatabaseField(columnName = Contract.LogTable._ID, generatedId = true)
-	@DefaultSortOrder(weight=2, order=SortOrder.Asc)
+	@DefaultSortOrder(weight=2, order=SortOrder.ASC)
 	private int id;
 
 	@DatabaseField
@@ -23,7 +23,7 @@ public class LogTable
 	private String methodName = "";
 
 	@DatabaseField
-	@DefaultSortOrder(weight=1, order=SortOrder.Asc)
+	@DefaultSortOrder(weight=1, order=SortOrder.ASC)
 	private long startTimeValue = 0;
 
 	@DatabaseField
