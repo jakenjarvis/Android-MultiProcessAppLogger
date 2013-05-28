@@ -25,8 +25,8 @@
 
 		<dependency>
 			<groupId>com.tojc.ormlite.android</groupId>
-			<artifactId>ormlite-content-provider</artifactId>
-			<version>${ormlite-content-provider.version}</version>
+			<artifactId>ormlite-content-provider-library</artifactId>
+			<version>${ormlite-content-provider-library.version}</version>
 		</dependency>
 
 	</dependencies>

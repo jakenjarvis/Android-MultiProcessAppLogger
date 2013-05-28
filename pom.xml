@@ -19,9 +19,7 @@
         <android-platform.version>17</android-platform.version>
         <android.support.version>r7</android.support.version>
 
-        <!--
-		<ormlite-content-provider.version>2.0.0-SNAPSHOT</ormlite-content-provider.version>
-        -->
+		<ormlite-content-provider-library.version>1.0.0-SNAPSHOT</ormlite-content-provider-library.version>
 
 		<!-- testing -->
 		<easymock.version>2.5.2</easymock.version>
@@ -67,15 +65,8 @@
 
 			<dependency>
 				<groupId>com.tojc.ormlite.android</groupId>
-				<artifactId>ormlite-content-provider</artifactId>
-	            <version>${ormlite-content-provider.version}</version>
-	            <type>apklib</type>
-			</dependency>
-
-			<dependency>
-				<groupId>com.tojc.logging.android</groupId>
-				<artifactId>multi-process-app-logger</artifactId>
-				<version>${project.version}</version>
+				<artifactId>ormlite-content-provider-library</artifactId>
+	            <version>${ormlite-content-provider-library.version}</version>
 	            <type>apklib</type>
 			</dependency>
 

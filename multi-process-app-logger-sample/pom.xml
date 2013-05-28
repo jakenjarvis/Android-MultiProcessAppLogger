@@ -26,6 +26,7 @@
 		<dependency>
 			<groupId>com.tojc.logging.android</groupId>
 			<artifactId>multi-process-app-logger</artifactId>
+			<version>${project.version}</version>
 			<type>apklib</type>
 		</dependency>
 
