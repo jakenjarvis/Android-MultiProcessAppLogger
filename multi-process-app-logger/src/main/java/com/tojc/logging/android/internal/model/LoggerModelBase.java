@@ -94,21 +94,24 @@ public abstract class LoggerModelBase implements LoggerModel
 				String classname = target_class.getPackage().getName();
 				String[] splitname = classname.split("\\.", -1);
 
-				String classpackagename = "";
+				StringBuilder classpackagename = new StringBuilder();
 				if(splitname.length >= 2)
 				{
 					String prd = "";
 					for(int i = 0; i <= splitname.length - 2; i++)
 					{
-						classpackagename += prd + splitname[i];
+						classpackagename.append(prd);
+						classpackagename.append(splitname[i]);
+						//classpackagename += prd + splitname[i];
 						prd = ".";
 					}
 				}
 				else
 				{
-					classpackagename = classname; 
+					classpackagename.append(classname);
+					//classpackagename = classname; 
 				}
-				this.packageName = classpackagename;
+				this.packageName = classpackagename.toString();
 				this.settings.setPackageName(this.packageName);
 			}
 			catch (Exception e)

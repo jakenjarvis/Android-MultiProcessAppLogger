@@ -40,11 +40,11 @@ public class LoggerItem extends LogTableItem implements LoggerModelPublicInterfa
 			.setMessage("");
 	}
 
-	public LoggerModel getModel()
+	public synchronized LoggerModel getModel()
 	{
 		return this.model;
 	}
-	public void setModel(LoggerModel model)
+	public synchronized void setModel(LoggerModel model)
 	{
 		this.model = model;
 	}

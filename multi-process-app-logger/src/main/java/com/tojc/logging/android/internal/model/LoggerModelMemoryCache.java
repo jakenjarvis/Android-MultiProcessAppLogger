@@ -10,7 +10,7 @@ import com.tojc.logging.android.internal.item.LoggerItem;
 
 public class LoggerModelMemoryCache extends LoggerModelBase
 {
-	private class Counter
+	private static class Counter
 	{
 		private int index = 0;
 

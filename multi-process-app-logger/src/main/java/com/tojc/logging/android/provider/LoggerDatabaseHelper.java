@@ -23,10 +23,10 @@ public class LoggerDatabaseHelper extends OrmLiteSqliteOpenHelper
 
 	private static void loadSettings(Context context)
 	{
-		if(settings == null)
-		{
-			settings = new ContentProviderSettings(context, new ComponentName(context, LoggerProvider.class));
-		}
+		//if(settings == null)
+		//{
+		//}
+		settings = new ContentProviderSettings(context, new ComponentName(context, LoggerProvider.class));
 	}
 
 	public static ContentProviderSettings getSettings()
@@ -138,13 +138,13 @@ public class LoggerDatabaseHelper extends OrmLiteSqliteOpenHelper
 	public <T, U, V> T callSynchronizedRetryBatchTasks(final Dao<U, V> dao, Callable<T> callable, CheckRetry<T> checkretry, long retrysleeptime, int retrycount) throws Exception
 	{
 		T result = null;
-		synchronized(dao)
+		boolean retry = true;
+		int retries = retrycount;
+		do
 		{
-			boolean retry = true;
-			int retries = retrycount;
-			do
+			try
 			{
-				try
+				synchronized(dao)
 				{
 					// MEMO: throw database is locked. (Exclusion between processes)
 					result = dao.callBatchTasks(callable);
@@ -157,15 +157,16 @@ public class LoggerDatabaseHelper extends OrmLiteSqliteOpenHelper
 						retry = false;
 					}
 				}
-				catch(SQLiteDatabaseLockedException e)
-				{
-					Log.w(MultiProcessAppLogger.TAG, "database is locked -> rest retry: " + retries);
-					Thread.sleep(retrysleeptime);
-				}
-				retries--;
 			}
-			while(retry && (retries >= 0));
+			catch(SQLiteDatabaseLockedException e)
+			{
+				Log.w(MultiProcessAppLogger.TAG, "database is locked -> rest retry: " + retries);
+				Thread.sleep(retrysleeptime);
+			}
+			retries--;
 		}
+		while(retry && (retries >= 0));
+
 		return result;
 	}
 }
