@@ -26,57 +26,15 @@
 		<dependency>
 			<groupId>com.tojc.ormlite.android</groupId>
 			<artifactId>ormlite-content-provider-library</artifactId>
-			<version>${ormlite-content-provider-library.version}</version>
+			<type>apklib</type>
 		</dependency>
 
 	</dependencies>
 	<build>
+		<sourceDirectory>src/</sourceDirectory>
+
 		<finalName>${project.artifactId}</finalName>
 		<plugins>
-		    <!-- create res folder for IDE -->
-			<plugin>
-				<artifactId>maven-antrun-plugin</artifactId>
-				<executions>
-					<execution>
-					    <id>create-directory</id>
-						<phase>initialize</phase>
-						<configuration>
-							<target>
-								<mkdir dir="${basedir}/res"/>
-								<mkdir dir="${basedir}/res/drawable"/>
-								<mkdir dir="${basedir}/res/layout"/>
-								<mkdir dir="${basedir}/res/values"/>
-
-								<mkdir dir="${basedir}/src/test/java"/>
-							</target>
-						</configuration>
-						<goals>
-							<goal>run</goal>
-						</goals>
-					</execution>
-				</executions>
-			</plugin>
-
-		    <!-- for IDE generate sources folder -->
-			<plugin>
-				<groupId>org.codehaus.mojo</groupId>
-				<artifactId>build-helper-maven-plugin</artifactId>
-				<executions>
-					<execution>
-						<id>add-source</id>
-						<phase>generate-sources</phase>
-						<goals>
-							<goal>add-source</goal>
-						</goals>
-						<configuration>
-							<sources>
-								<source>${basedir}/src/test/java</source>
-							</sources>
-						</configuration>
-					</execution>
-				</executions>
-			</plugin>
-
 			<!--
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
