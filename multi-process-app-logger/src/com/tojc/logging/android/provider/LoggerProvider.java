@@ -18,9 +18,8 @@ public class LoggerProvider extends OrmLiteSimpleContentProvider<LoggerDatabaseH
     public boolean onCreate()
     {
     	// create instance... load ContentProviderSettings
-    	//@SuppressWarnings("unused")
-		//LoggerDatabaseHelper helper = 
-		this.getHelper();
+    	@SuppressWarnings("unused")
+		LoggerDatabaseHelper helper = this.getHelper();
 
     	ContentProviderSettings settings = LoggerDatabaseHelper.getSettings();
 

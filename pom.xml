@@ -69,7 +69,7 @@
 				<groupId>com.tojc.ormlite.android</groupId>
 				<artifactId>ormlite-content-provider-library</artifactId>
 	            <version>${ormlite-content-provider-library.version}</version>
-	            <type>apklib</type>
+	            <type>jar</type>
 			</dependency>
 
 			<dependency>

@@ -2,6 +2,8 @@ package com.tojc.logging.android.multiprocessapploggersample;
 
 import com.tojc.logging.android.Log;
 import com.tojc.logging.android.Logger;
+import com.tojc.logging.android.internal.model.LoggerModelType;
+
 import android.os.Bundle;
 import android.app.Activity;
 import android.view.Menu;
@@ -16,6 +18,10 @@ public class MainActivity extends Activity
 		setContentView(R.layout.activity_main);
 
 		Logger.settings().initialize(this);
+		Logger.settings().setPackageName("com.tojc.logging.android.multiprocessapploggersample");
+		Logger.settings().setLogcatEnabled(true);
+		Logger.settings().setLoggerEnabled(true);
+		Logger.settings().setLoggerModelType(LoggerModelType.DelayedContentProvider);
 
 		Logger.verbose().print("test88");
 		Log.v("test49");
