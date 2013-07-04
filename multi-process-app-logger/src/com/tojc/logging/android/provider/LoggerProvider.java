@@ -1,5 +1,7 @@
 package com.tojc.logging.android.provider;
 
+import android.util.Log;
+
 import com.tojc.logging.android.internal.item.LogTable;
 import com.tojc.logging.android.settings.ContentProviderSettings;
 import com.tojc.ormlite.android.OrmLiteSimpleContentProvider;
@@ -14,9 +16,16 @@ public class LoggerProvider extends OrmLiteSimpleContentProvider<LoggerDatabaseH
         return LoggerDatabaseHelper.class;
     }
 
+    protected Class<?> getLoggerProviderClass()
+    {
+        return com.tojc.logging.android.provider.LoggerProvider.class;
+    }
+
     @Override
     public boolean onCreate()
     {
+    	LoggerDatabaseHelper.loadSettings(this.getContext(), this.getLoggerProviderClass());
+
     	// create instance... load ContentProviderSettings
     	@SuppressWarnings("unused")
 		LoggerDatabaseHelper helper = this.getHelper();

@@ -6,7 +6,6 @@ import android.content.Context;
 import com.tojc.logging.android.internal.Interface.LoggerModel;
 import com.tojc.logging.android.internal.Interface.LoggerSettingsPublicInterface;
 import com.tojc.logging.android.internal.model.LoggerModelType;
-import com.tojc.logging.android.provider.LoggerProvider;
 
 public class LoggerSettings implements LoggerSettingsPublicInterface
 {
@@ -31,26 +30,26 @@ public class LoggerSettings implements LoggerSettingsPublicInterface
     }
 
 	@Override
-	public void initialize(Context context)
+	public void initialize(Context context, Class<?> provider)
 	{
 		if(this.context == null)
 		{
 			this.context = context;
-	    	this.contentProviderSettings = new ContentProviderSettings(context, new ComponentName(context, LoggerProvider.class));
+	    	this.contentProviderSettings = new ContentProviderSettings(context, new ComponentName(context, provider));
 		}
 	}
 
 	@Override
-	public void initialize(Context context, LoggerModelType loggerModelType)
+	public void initialize(Context context, Class<?> provider, LoggerModelType loggerModelType)
 	{
-		this.initialize(context);
+		this.initialize(context, provider);
 		this.setLoggerModelType(loggerModelType);
 	}
 
 	@Override
-	public void initialize(Context context, LoggerModel loggerModel)
+	public void initialize(Context context, Class<?> provider, LoggerModel loggerModel)
 	{
-		this.initialize(context, LoggerModelType.OriginalModel);
+		this.initialize(context, provider, LoggerModelType.OriginalModel);
 		this.setLoggerModel(loggerModel);
 	}
 

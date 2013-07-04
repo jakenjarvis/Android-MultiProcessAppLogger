@@ -13,9 +13,9 @@ public interface Interface
 {
 	public interface LoggerSettingsPublicInterface
 	{
-		public void initialize(Context context);
-		public void initialize(Context context, LoggerModelType loggerModelType);
-		public void initialize(Context context, LoggerModel loggerModel);
+		public void initialize(Context context, Class<?> provider);
+		public void initialize(Context context, Class<?> provider, LoggerModelType loggerModelType);
+		public void initialize(Context context, Class<?> provider, LoggerModel loggerModel);
 
 		public LoggerModelType getLoggerModelType();
 		public void setLoggerModelType(LoggerModelType loggerModelType);

@@ -21,12 +21,9 @@ public class LoggerDatabaseHelper extends OrmLiteSqliteOpenHelper
 {
 	private static ContentProviderSettings settings = null;
 
-	private static void loadSettings(Context context)
+	public static void loadSettings(Context context, Class<?> provider)
 	{
-		//if(settings == null)
-		//{
-		//}
-		settings = new ContentProviderSettings(context, new ComponentName(context, LoggerProvider.class));
+		settings = new ContentProviderSettings(context, new ComponentName(context, provider));
 	}
 
 	public static ContentProviderSettings getSettings()
@@ -34,21 +31,9 @@ public class LoggerDatabaseHelper extends OrmLiteSqliteOpenHelper
 		return settings;
 	}
 
-	private static String getDatabaseName(Context context)
-	{
-		loadSettings(context);
-		return settings.getDatabaseName();
-	}
-
-	private static int getDatabaseVersion(Context context)
-	{
-		loadSettings(context);
-		return settings.getDatabaseVersion();
-	}
-
 	public LoggerDatabaseHelper(Context context)
 	{
-		super(context, getDatabaseName(context), null, getDatabaseVersion(context));
+		super(context, settings.getDatabaseName(), null, settings.getDatabaseVersion());
 	}
 
 	@Override
