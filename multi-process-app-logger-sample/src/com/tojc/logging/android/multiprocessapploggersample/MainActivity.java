@@ -17,7 +17,7 @@ public class MainActivity extends Activity
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
 
-		Logger.settings().initialize(this);
+		Logger.settings().initialize(this, com.tojc.logging.android.multiprocessapploggersample.LoggerProvider.class);
 		Logger.settings().setPackageName("com.tojc.logging.android.multiprocessapploggersample");
 		Logger.settings().setLogcatEnabled(true);
 		Logger.settings().setLoggerEnabled(true);

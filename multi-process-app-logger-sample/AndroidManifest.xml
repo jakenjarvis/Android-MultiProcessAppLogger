@@ -23,7 +23,7 @@
             </intent-filter>
         </activity>
 
-		<provider android:name="com.tojc.logging.android.provider.LoggerProvider"
+		<provider android:name="com.tojc.logging.android.multiprocessapploggersample.LoggerProvider"
 		    android:authorities="com.tojc.logging.android"
 		    android:exported="false"
 		    >
