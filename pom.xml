@@ -24,7 +24,7 @@
 		<ormlite-content-provider-library.version>1.0.3-SNAPSHOT</ormlite-content-provider-library.version>
 
 		<!-- testing -->
-		<easymock.version>2.5.2</easymock.version>
+		<easymock.version>3.2</easymock.version>
 
 		<!-- plugins -->
 		<maven-checkstyle-plugin.version>2.10</maven-checkstyle-plugin.version>
@@ -39,7 +39,13 @@
 		<maven-antrun-plugin.version>1.7</maven-antrun-plugin.version>
 		<build-helper-maven-plugin.version>1.8</build-helper-maven-plugin.version>
 
-		<lint-maven-plugin.version>0.0.6</lint-maven-plugin.version>
+		<lint-maven-plugin.version>0.0.8</lint-maven-plugin.version>
+
+		<!--
+			$ mvn versions:display-dependency-updates
+			$ mvn versions:update-properties
+		-->
+		<versions-maven-plugin.version>2.1</versions-maven-plugin.version>
     </properties>
 
 	<modules>
@@ -258,6 +264,12 @@
 							</goals>
 						</execution>
 					</executions>
+				</plugin>
+
+				<plugin>
+					<groupId>org.codehaus.mojo</groupId>
+					<artifactId>versions-maven-plugin</artifactId>
+					<version>${versions-maven-plugin.version}</version>
 				</plugin>
 
 			</plugins>
