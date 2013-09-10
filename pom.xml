@@ -21,7 +21,7 @@
         <android.version>4.1.1.4</android.version>
         <android.support.version>r7</android.support.version>
 
-		<ormlite-content-provider-library.version>1.0.3-SNAPSHOT</ormlite-content-provider-library.version>
+		<ormlite-content-provider-library.version>1.0.3</ormlite-content-provider-library.version>
 
 		<!-- testing -->
 		<easymock.version>3.2</easymock.version>
