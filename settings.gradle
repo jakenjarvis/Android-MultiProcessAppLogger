@@ -1,0 +1,2 @@
+include ':multi-process-app-logger'
+include ':multi-process-app-logger-sample'

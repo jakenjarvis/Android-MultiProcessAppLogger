@@ -1,0 +1,146 @@
+import java.util.regex.Matcher
+import java.util.regex.Pattern
+
+apply plugin: 'android-library'
+apply plugin: 'maven-publish'
+
+dependencies {
+    compile fileTree(dir: 'libs', include: ['*.jar'])
+    compile "com.tojc.ormlite.android:ormlite-content-provider-library:1.0.3@jar"
+    // TODO: Why gradle does not solves this dependency?
+    compile "com.j256.ormlite:ormlite-core:4.+"
+    compile "com.j256.ormlite:ormlite-android:4.+"
+}
+
+android {
+    compileSdkVersion androidCompileSdkVersion
+    buildToolsVersion androidBuildToolsVersion
+
+    defaultConfig {
+        minSdkVersion defaultConfigMinSdkVersion
+        targetSdkVersion defaultConfigTargetSdkVersion
+        versionCode getAndroidManifestVersionCode()
+        versionName project.version
+    }
+
+    sourceSets {
+        main {
+            manifest.srcFile 'AndroidManifest.xml'
+            java.srcDirs = ['src']
+            resources.srcDirs = ['src']
+            aidl.srcDirs = ['src']
+            renderscript.srcDirs = ['src']
+            res.srcDirs = ['res']
+            assets.srcDirs = ['assets']
+        }
+
+        // Move the tests to tests/java, tests/res, etc...
+        //instrumentTest.setRoot('tests')
+        androidTest.setRoot('tests')
+
+        // Move the build types to build-types/<type>
+        // For instance, build-types/debug/java, build-types/debug/AndroidManifest.xml, ...
+        // This moves them out of them default location under src/<type>/... which would
+        // conflict with src/ being used by the main source set.
+        // Adding new build types or product flavors should be accompanied
+        // by a similar customization.
+        debug.setRoot('build-types/debug')
+        release.setRoot('build-types/release')
+    }
+
+    // Note that most of the configuration of the Build Type do not apply to library projects.
+    // http://tools.android.com/tech-docs/new-build-system/user-guide#TOC-Differences-between-a-Project-and-a-Library-Project
+    buildTypes {
+        debug {
+            debuggable true
+        }
+        release {
+            debuggable false
+        }
+    }
+
+    // http://stackoverflow.com/questions/20699147/gradle-build-fails-on-lint-task
+    lintOptions {
+        abortOnError false
+    }
+}
+
+def getAndroidManifestVersionCode()
+{
+    def result = -1
+    def pattern = Pattern.compile("versionCode=\"(\\d+)\"")
+    def manifestFile = new File(project.projectDir.toString() + '/AndroidManifest.xml')
+    manifestFile.eachLine { line ->
+        def matcher = pattern.matcher(line)
+        if(matcher.find())
+        {
+            result = Integer.parseInt(matcher.group(1))
+            //break
+        }
+    }
+    if(result <= 0)
+    {
+        throw new InvalidUserDataException("versionCode was not found in the $manifestFile")
+    }
+    return result
+}
+
+
+// http://www.gradle.org/docs/current/dsl/org.gradle.api.tasks.bundling.Zip.html
+task artifactAar(type: Zip) {
+    extension = 'aar'
+    destinationDir = file('build/libs')
+}
+
+// http://www.gradle.org/docs/current/dsl/org.gradle.api.tasks.bundling.Jar.html
+task artifactJar(type: Jar) {
+    from android.sourceSets.main.java
+    extension = 'jar'
+    destinationDir = file('build/libs/')
+}
+
+// http://www.gradle.org/docs/current/dsl/org.gradle.api.tasks.bundling.Zip.html
+// https://github.com/googlemaps/android-maps-utils/blob/master/library/build.gradle
+task artifactApklib(type: Zip) {
+    extension = 'apklib'
+    from 'AndroidManifest.xml'
+    into('res') {
+        from 'res'
+    }
+    into('src') {
+        from 'src'
+    }
+    destinationDir = file('build/libs/')
+}
+
+artifacts {
+    archives artifactAar
+    archives artifactApklib
+    archives artifactJar
+}
+
+// http://www.gradle.org/docs/current/userguide/publishing_maven.html
+// http://www.flexlabs.org/2013/06/using-local-aar-android-library-packages-in-gradle-builds
+// http://www.rickcarragher.com/blog/2014/01/21/gradle-and-android
+
+// gradlew clean build publish
+
+android.libraryVariants
+publishing {
+    publications {
+        releaseAar(MavenPublication) {
+            artifact artifactAar
+        }
+        releaseApklib(MavenPublication) {
+            artifact artifactApklib
+        }
+        releaseJar(MavenPublication) {
+            artifact artifactJar
+        }
+    }
+    repositories {
+        maven {
+            url(mavenRepository)
+        }
+    }
+}

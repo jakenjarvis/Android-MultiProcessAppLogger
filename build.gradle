@@ -1,0 +1,74 @@
+// Top-level build file where you can add configuration options common to all sub-projects/modules.
+buildscript {
+    repositories {
+        mavenCentral()
+    }
+    dependencies {
+        classpath 'com.android.tools.build:gradle:0.9.+'
+    }
+}
+
+ext {
+    defaultEncoding = 'UTF-8'
+
+    mavenRepository = "../repository"
+
+    // http://qiita.com/gfx/items/fd8e201f9dc71518abb8
+    revision = executeCommandLine("cd ${project.rootDir}", "git rev-parse --short HEAD").in.text.trim()
+    builddate = new Date().format('yyyyMMdd-HHmmss')
+
+    // android sdk
+    androidCompileSdkVersion = 19
+    androidBuildToolsVersion = "19.0.3"
+
+    // AndroidManifest.xml
+    defaultConfigMinSdkVersion = 10
+    defaultConfigTargetSdkVersion = 19
+}
+
+allprojects {
+    tasks.withType(AbstractCompile) each {
+        it.options.encoding = defaultEncoding
+    }
+    tasks.withType(GroovyCompile) each {
+        it.groovyOptions.encoding = defaultEncoding
+    }
+    // TODO: How to set? android.compileOptions
+    // Deprecated Compile replaced by JavaCompile.
+    tasks.withType(JavaCompile) each {
+        it.sourceCompatibility = JavaVersion.VERSION_1_6
+        it.targetCompatibility = JavaVersion.VERSION_1_6
+    }
+}
+
+subprojects {
+    repositories{
+        mavenCentral()
+    }
+
+    project.group = "com.tojc.logging.android"
+    project.version = "0.0.2" + "-" + builddate + "-" + revision
+}
+
+def executeCommandLine(... commands)
+{
+    def shell = ""
+    def param = ""
+    def delimiter = ""
+
+    if(System.getProperty("os.name") ==~ /(?i).*windows.*/)
+    {
+        // windows
+        shell = "cmd"
+        param = "/c"
+        delimiter = " & "
+    }
+    else
+    {
+        // unix
+        shell = "sh"
+        param = "-c"
+        delimiter = " ; "
+    }
+    return [shell, param, commands.join(delimiter)].execute()
+}
