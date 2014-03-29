@@ -4,7 +4,7 @@ call gradlew clean build publish
 
 cd repository
 
-git add .
+git add -f .
 git commit -m "update repository"
 
 cd ..
