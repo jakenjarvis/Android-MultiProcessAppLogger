@@ -1,0 +1,4 @@
+# subtree
+# http://layzie.hatenablog.com/entry/20140131/1391104248
+git subtree add --prefix=repository git@github.com:jakenjarvis/Android-MultiProcessAppLogger.git gh-pages --squash
+
