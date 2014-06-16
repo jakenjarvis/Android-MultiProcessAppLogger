@@ -4,7 +4,7 @@ buildscript {
         mavenCentral()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:0.9.+'
+        classpath 'com.android.tools.build:gradle:0.11.+'
     }
 }
 
@@ -27,7 +27,7 @@ ext {
 
     // android sdk
     androidCompileSdkVersion = 19
-    androidBuildToolsVersion = "19.0.3"
+    androidBuildToolsVersion = "19.1.0"
 
     // AndroidManifest.xml
     defaultConfigMinSdkVersion = 10
@@ -36,5 +36,5 @@ ext {
 
 subprojects {
     project.group = "com.tojc.logging.android"
-    project.version = "0.0.2" + "-" + builddate + "-" + git_revision_short
+    project.version = "0.0.3" + "-" + builddate + "-" + git_revision_short
 }

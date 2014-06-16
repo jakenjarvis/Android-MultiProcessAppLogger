@@ -6,7 +6,7 @@ repositories{
 }
 
 dependencies {
-    compile fileTree(dir: 'libs', include: ['*.jar'])
+    //compile fileTree(dir: 'libs', include: ['*.jar'])
     compile "com.tojc.ormlite.android:ormlite-content-provider-library:1.0.3@jar"
     // TODO: Why gradle does not solves this dependency?
     compile "com.j256.ormlite:ormlite-core:4.+"
@@ -75,36 +75,28 @@ commonlibrary {
 
 // gradlew clean build publish
 
+artifacts {
+    afterEvaluate {
+        archives packageArtifactReleaseAar
+        archives packageArtifactReleaseApklib
+        archives packageArtifactReleaseJar
+        //archives packageArtifactReleaseSourceJar
+        //archives packageArtifactReleaseJavadocJar
+    }
+}
+
 android.libraryVariants
 publishing {
     publications {
-        releaseAar(MavenPublication) {
-            // Note: Because the task is automatically added by the AndroidGradlePlugin,
-            // will not be able to recognize the task If it is not after evaluation.
+        releaseArtifact(MavenPublication) {
             afterEvaluate {
                 artifact packageArtifactReleaseAar
-            }
-        }
-        releaseApklib(MavenPublication) {
-            afterEvaluate {
                 artifact packageArtifactReleaseApklib
-            }
-        }
-        releaseJar(MavenPublication) {
-            afterEvaluate {
                 artifact packageArtifactReleaseJar
+                //artifact packageArtifactReleaseSourceJar
+                //artifact packageArtifactReleaseJavadocJar
             }
         }
-        //releaseSourceJar(MavenPublication) {
-        //    afterEvaluate {
-        //        artifact packageArtifactReleaseSourceJar
-        //    }
-        //}
-        //releaseJavadocJar(MavenPublication) {
-        //    afterEvaluate {
-        //        artifact packageArtifactReleaseJavadocJar
-        //    }
-        //}
     }
     repositories {
         maven {
