@@ -7,7 +7,7 @@ repositories{
 
 dependencies {
     //compile fileTree(dir: 'libs', include: ['*.jar'])
-    compile "com.tojc.ormlite.android:ormlite-content-provider-library:1.0.3@jar"
+    compile "com.tojc.ormlite.android:ormlite-content-provider-library:1.0.4@aar"
     // TODO: Why gradle does not solves this dependency?
     compile "com.j256.ormlite:ormlite-core:4.+"
     compile "com.j256.ormlite:ormlite-android:4.+"
