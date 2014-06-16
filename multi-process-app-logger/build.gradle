@@ -69,14 +69,6 @@ commonlibrary {
     //apply project, "addTaskArtifactSourceJar"
 }
 
-artifacts {
-    archives artifactAar
-    archives artifactApklib
-    archives artifactJar
-    //archives artifactSourceJar
-    //archives artifactJavadocJar
-}
-
 // http://www.gradle.org/docs/current/userguide/publishing_maven.html
 // http://www.flexlabs.org/2013/06/using-local-aar-android-library-packages-in-gradle-builds
 // http://www.rickcarragher.com/blog/2014/01/21/gradle-and-android
@@ -87,19 +79,31 @@ android.libraryVariants
 publishing {
     publications {
         releaseAar(MavenPublication) {
-            artifact artifactAar
+            // Note: Because the task is automatically added by the AndroidGradlePlugin,
+            // will not be able to recognize the task If it is not after evaluation.
+            afterEvaluate {
+                artifact packageArtifactReleaseAar
+            }
         }
         releaseApklib(MavenPublication) {
-            artifact artifactApklib
+            afterEvaluate {
+                artifact packageArtifactReleaseApklib
+            }
         }
         releaseJar(MavenPublication) {
-            artifact artifactJar
+            afterEvaluate {
+                artifact packageArtifactReleaseJar
+            }
         }
         //releaseSourceJar(MavenPublication) {
-        //    artifact artifactSourceJar
+        //    afterEvaluate {
+        //        artifact packageArtifactReleaseSourceJar
+        //    }
         //}
-        //releaseJavaDocJar(MavenPublication) {
-        //    artifact artifactJavadocJar
+        //releaseJavadocJar(MavenPublication) {
+        //    afterEvaluate {
+        //        artifact packageArtifactReleaseJavadocJar
+        //    }
         //}
     }
     repositories {
