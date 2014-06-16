@@ -8,13 +8,21 @@ buildscript {
     }
 }
 
-ext {
-    defaultEncoding = 'UTF-8'
+apply from: "gradle/commonlibrary/CommonLibrary.gradle"
 
+commonlibrary {
+    apply project, "allprojectsSetEncoding"
+    apply project, "allprojectsSetCompatibilityJavaVersion"
+    apply project, "gitRevision"
+
+    // patch
+    apply(project, "allprojectsPatchDisableLintOptionsAbortOnError")
+    apply(project, "allprojectsPatchEnableAaptOptionsUseAaptPngCruncher")
+}
+
+ext {
     mavenRepository = "../repository"
 
-    // http://qiita.com/gfx/items/fd8e201f9dc71518abb8
-    revision = executeCommandLine("cd ${project.rootDir}", "git rev-parse --short HEAD").in.text.trim()
     builddate = new Date().format('yyyyMMdd-HHmmss')
 
     // android sdk
@@ -26,49 +34,7 @@ ext {
     defaultConfigTargetSdkVersion = 19
 }
 
-allprojects {
-    tasks.withType(AbstractCompile) each {
-        it.options.encoding = defaultEncoding
-    }
-    tasks.withType(GroovyCompile) each {
-        it.groovyOptions.encoding = defaultEncoding
-    }
-    // TODO: How to set? android.compileOptions
-    // Deprecated Compile replaced by JavaCompile.
-    tasks.withType(JavaCompile) each {
-        it.sourceCompatibility = JavaVersion.VERSION_1_6
-        it.targetCompatibility = JavaVersion.VERSION_1_6
-    }
-}
-
 subprojects {
-    repositories{
-        mavenCentral()
-    }
-
     project.group = "com.tojc.logging.android"
-    project.version = "0.0.2" + "-" + builddate + "-" + revision
-}
-
-def executeCommandLine(... commands)
-{
-    def shell = ""
-    def param = ""
-    def delimiter = ""
-
-    if(System.getProperty("os.name") ==~ /(?i).*windows.*/)
-    {
-        // windows
-        shell = "cmd"
-        param = "/c"
-        delimiter = " & "
-    }
-    else
-    {
-        // unix
-        shell = "sh"
-        param = "-c"
-        delimiter = " ; "
-    }
-    return [shell, param, commands.join(delimiter)].execute()
+    project.version = "0.0.2" + "-" + builddate + "-" + git_revision_short
 }

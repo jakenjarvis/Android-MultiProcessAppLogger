@@ -1,8 +1,9 @@
-import java.util.regex.Matcher
-import java.util.regex.Pattern
-
 apply plugin: 'android-library'
 apply plugin: 'maven-publish'
+
+repositories{
+    mavenCentral()
+}
 
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
@@ -19,7 +20,7 @@ android {
     defaultConfig {
         minSdkVersion defaultConfigMinSdkVersion
         targetSdkVersion defaultConfigTargetSdkVersion
-        versionCode getAndroidManifestVersionCode()
+        versionCode 1
         versionName project.version
     }
 
@@ -58,65 +59,22 @@ android {
             debuggable false
         }
     }
-
-    // http://stackoverflow.com/questions/20699147/gradle-build-fails-on-lint-task
-    lintOptions {
-        abortOnError false
-    }
 }
 
-def getAndroidManifestVersionCode()
-{
-    def result = -1
-    def pattern = Pattern.compile("versionCode=\"(\\d+)\"")
-    def manifestFile = new File(project.projectDir.toString() + '/AndroidManifest.xml')
-    manifestFile.eachLine { line ->
-        def matcher = pattern.matcher(line)
-        if(matcher.find())
-        {
-            result = Integer.parseInt(matcher.group(1))
-            //break
-        }
-    }
-    if(result <= 0)
-    {
-        throw new InvalidUserDataException("versionCode was not found in the $manifestFile")
-    }
-    return result
-}
-
-
-// http://www.gradle.org/docs/current/dsl/org.gradle.api.tasks.bundling.Zip.html
-task artifactAar(type: Zip) {
-    extension = 'aar'
-    destinationDir = file('build/libs')
-}
-
-// http://www.gradle.org/docs/current/dsl/org.gradle.api.tasks.bundling.Jar.html
-task artifactJar(type: Jar) {
-    from android.sourceSets.main.java
-    extension = 'jar'
-    destinationDir = file('build/libs/')
-}
-
-// http://www.gradle.org/docs/current/dsl/org.gradle.api.tasks.bundling.Zip.html
-// https://github.com/googlemaps/android-maps-utils/blob/master/library/build.gradle
-task artifactApklib(type: Zip) {
-    extension = 'apklib'
-    from 'AndroidManifest.xml'
-    into('res') {
-        from 'res'
-    }
-    into('src') {
-        from 'src'
-    }
-    destinationDir = file('build/libs/')
+commonlibrary {
+    apply project, "addTaskArtifactAar"
+    apply project, "addTaskArtifactApklib"
+    apply project, "addTaskArtifactJar"
+    //apply project, "addTaskArtifactJavadocJar"
+    //apply project, "addTaskArtifactSourceJar"
 }
 
 artifacts {
     archives artifactAar
     archives artifactApklib
     archives artifactJar
+    //archives artifactSourceJar
+    //archives artifactJavadocJar
 }
 
 // http://www.gradle.org/docs/current/userguide/publishing_maven.html
@@ -137,6 +95,12 @@ publishing {
         releaseJar(MavenPublication) {
             artifact artifactJar
         }
+        //releaseSourceJar(MavenPublication) {
+        //    artifact artifactSourceJar
+        //}
+        //releaseJavaDocJar(MavenPublication) {
+        //    artifact artifactJavadocJar
+        //}
     }
     repositories {
         maven {

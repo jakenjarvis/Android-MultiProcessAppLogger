@@ -1,8 +1,9 @@
-import java.util.regex.Matcher
-import java.util.regex.Pattern
-
 apply plugin: 'android'
 apply plugin: 'maven-publish'
+
+repositories{
+    mavenCentral()
+}
 
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
@@ -16,7 +17,7 @@ android {
     defaultConfig {
         minSdkVersion defaultConfigMinSdkVersion
         targetSdkVersion defaultConfigTargetSdkVersion
-        versionCode getAndroidManifestVersionCode()
+        versionCode 1
         versionName project.version
     }
 
@@ -55,29 +56,4 @@ android {
             debuggable false
         }
     }
-
-    // http://stackoverflow.com/questions/20699147/gradle-build-fails-on-lint-task
-    lintOptions {
-        abortOnError false
-    }
-}
-
-def getAndroidManifestVersionCode()
-{
-    def result = -1
-    def pattern = Pattern.compile("versionCode=\"(\\d+)\"")
-    def manifestFile = new File(project.projectDir.toString() + '/AndroidManifest.xml')
-    manifestFile.eachLine { line ->
-        def matcher = pattern.matcher(line)
-        if(matcher.find())
-        {
-            result = Integer.parseInt(matcher.group(1))
-            //break
-        }
-    }
-    if(result <= 0)
-    {
-        throw new InvalidUserDataException("versionCode was not found in the $manifestFile")
-    }
-    return result
 }
