@@ -4,7 +4,7 @@ buildscript {
         mavenCentral()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:0.11.+'
+        classpath 'com.android.tools.build:gradle:1.2.2'
     }
 }
 
@@ -17,21 +17,23 @@ commonlibrary {
 
     // patch
     apply(project, "allprojectsPatchDisableLintOptionsAbortOnError")
-    apply(project, "allprojectsPatchEnableAaptOptionsUseAaptPngCruncher")
+    //apply(project, "allprojectsPatchEnableAaptOptionsUseAaptPngCruncher")
 }
 
 ext {
+    defaultJavaVersion = JavaVersion.VERSION_1_7
+
     mavenRepository = "../repository"
 
     builddate = new Date().format('yyyyMMdd-HHmmss')
 
     // android sdk
-    androidCompileSdkVersion = 19
-    androidBuildToolsVersion = "19.1.0"
+    androidCompileSdkVersion = 22
+    androidBuildToolsVersion = "22.0.1"
 
     // AndroidManifest.xml
     defaultConfigMinSdkVersion = 10
-    defaultConfigTargetSdkVersion = 19
+    defaultConfigTargetSdkVersion = 22
 }
 
 subprojects {
