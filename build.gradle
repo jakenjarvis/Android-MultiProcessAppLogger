@@ -38,5 +38,5 @@ ext {
 
 subprojects {
     project.group = "com.tojc.logging.android"
-    project.version = "1.0.0" + "-" + builddate + "-" + git_revision_short
+    project.version = "1.0.1" + "-" + builddate + "-" + git_revision_short
 }
