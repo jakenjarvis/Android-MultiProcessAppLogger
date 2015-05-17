@@ -1,6 +1,6 @@
 git subtree pull --prefix=repository git@github.com:jakenjarvis/Android-MultiProcessAppLogger.git gh-pages --squash
 
-call gradlew clean build publish
+call gradlew clean build uploadArchives
 
 cd repository
 
