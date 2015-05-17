@@ -1,5 +1,4 @@
-apply plugin: 'android-library'
-apply plugin: 'maven-publish'
+apply plugin: 'com.android.library'
 
 repositories{
     mavenCentral()
@@ -45,6 +44,8 @@ commonlibrary {
     apply project, "addTaskArtifactJar"
     //apply project, "addTaskArtifactJavadocJar"
     //apply project, "addTaskArtifactSourceJar"
+
+    apply project, "NeutralNexus"
 }
 
 // http://www.gradle.org/docs/current/userguide/publishing_maven.html
@@ -63,22 +64,6 @@ artifacts {
     }
 }
 
-android.libraryVariants
-publishing {
-    publications {
-        releaseArtifact(MavenPublication) {
-            afterEvaluate {
-                artifact packageArtifactReleaseAar
-                artifact packageArtifactReleaseApklib
-                artifact packageArtifactReleaseJar
-                //artifact packageArtifactReleaseSourceJar
-                //artifact packageArtifactReleaseJavadocJar
-            }
-        }
-    }
-    repositories {
-        maven {
-            url(mavenRepository)
-        }
-    }
+nexus {
+    localPublishing = rootProject.ext.localPublishing
 }

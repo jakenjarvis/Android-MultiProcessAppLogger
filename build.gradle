@@ -23,7 +23,8 @@ commonlibrary {
 ext {
     defaultJavaVersion = JavaVersion.VERSION_1_7
 
-    mavenRepository = "../repository"
+    mavenRepository = file("${rootDir}/repository")
+    localPublishing = true
 
     builddate = new Date().format('yyyyMMdd-HHmmss')
 

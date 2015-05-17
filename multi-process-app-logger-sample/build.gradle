@@ -1,5 +1,4 @@
-apply plugin: 'android'
-apply plugin: 'maven-publish'
+apply plugin: 'com.android.application'
 
 repositories{
     mavenCentral()
